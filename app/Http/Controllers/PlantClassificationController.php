@@ -16,6 +16,7 @@ class PlantClassificationController extends Controller
     // Handle image upload and call PlantNet API for classification
     public function classifyPlant(Request $request)
     {
+        return "hello";
         // Validate the request
         $request->validate([
             'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
