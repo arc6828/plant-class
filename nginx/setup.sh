@@ -22,4 +22,5 @@ sudo ln -s /etc/nginx/sites-available/plants.samkhok.org /etc/nginx/sites-enable
 
 sudo service nginx restart
 
-# certbot 
+# certbot --nginx -d plants.samkhok.org
+# certbot --nginx -d example.com -d www.example.com
