@@ -16,7 +16,7 @@
     </form>
 
     <h2>for example</h2>
-    <img src="{{ asset('img/banana.jpg') }}" />
+    <img src="{{ asset('img/banana.jpg') }}" height="200" />
 </body>
 
 </html>
