@@ -14,6 +14,9 @@
         <input type="file" name="image" accept="image/*" required>
         <button type="submit">Classify Plant</button>
     </form>
+
+    <h2>for example</h2>
+    <img src="{{ asset('img/banana.jpg') }}" />
 </body>
 
 </html>
