@@ -2,6 +2,9 @@
 
 ## Getting Started!!!
 
+## ngrok
+ngrok config add-authtoken 1vDeEeToexwQtanEzEY7kzxwJJ3_7FJwn3e3b8yL8RDuJQ4Js
+ngrok http http://localhost:8000
 
 
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
