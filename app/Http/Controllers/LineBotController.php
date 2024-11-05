@@ -106,7 +106,8 @@ class LineBotController extends Controller
             $result = $response->json();            
             return $this->view($result);
         } else {
-            return 'เกิดข้อผิดพลาดในการเชื่อมต่อกับ PlantNet API';
+            // return 'เกิดข้อผิดพลาดในการเชื่อมต่อกับ PlantNet API';
+            return 'ไม่สามารถจำแนกพืชได้';
         }
     }
 
@@ -122,6 +123,7 @@ class LineBotController extends Controller
             $plantInfo .= "$commonName ($score%) \n";
         }
         $plantInfo .= "---";
-        return $plantInfo ?: 'ไม่สามารถจำแนกพืชได้';
+        // return $plantInfo ?: 'ไม่สามารถจำแนกพืชได้';
+        return $plantInfo;
     }
 }
