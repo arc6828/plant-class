@@ -13,6 +13,7 @@ sudo chown -R www-data.www-data storage
 composer install
 cp .env.example .env
 php artisan key:generate
+php arisan migrate
 
 # config Laravel .env manually
 
