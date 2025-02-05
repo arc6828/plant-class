@@ -2,11 +2,40 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Plant;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class PlantClassificationController extends Controller
 {
+    public function index(Request $request)
+    {
+        $per_page = 10;
+        $query = Plant::query();
+
+        // if search
+        if ($request->has('search')) {
+            $keyword = $request->get('search', '');
+            $query = $query->where(function ($q) use ($keyword) {
+                $q
+                    ->where('species_name', 'LIKE', "%$keyword%")
+                    ->orWhere('common_name', 'LIKE', "%$keyword%")
+                    ->orWhere('common_name_th', 'LIKE', "%$keyword%")
+                    ->orWhere('family', 'LIKE', "%$keyword%")
+                    ->orWhere('genus', 'LIKE', "%$keyword%")
+                ;
+            });
+        }
+
+        // always
+        $plants = $query
+            ->whereNot('common_name_th', '')
+            // ->orderBy('common_name_th', 'asc')
+            ->paginate($per_page);
+
+        return view('plants.index', compact('plants'));
+    }
+
     // Show the upload form
     public function showUploadForm()
     {

@@ -2,6 +2,13 @@
 
 ## Getting Started!!!
 
+## Development
+```
+php artisan make:model Plant -m
+php artisan make:seeder PlantSeeder
+php artisan db:seed --class=PlantSeeder
+```
+
 ## ngrok
 ngrok config add-authtoken 1vDeEeToexwQtanEzEY7kzxwJJ3_7FJwn3e3b8yL8RDuJQ4Js
 ngrok http http://localhost:8000

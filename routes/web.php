@@ -25,3 +25,6 @@ require __DIR__.'/auth.php';
 
 Route::get('/upload', [PlantClassificationController::class, 'showUploadForm'])->name('upload.form');
 Route::post('/classify', [PlantClassificationController::class, 'classifyPlant'])->name('classify.plant');
+
+
+Route::resource('/plants', PlantClassificationController::class);

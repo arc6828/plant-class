@@ -64,6 +64,9 @@
                         <a class="nav-link" href="#">เกี่ยวกับเรา</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="{{ route('plants.index') }}">ฐานข้อมูล</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#">ติดต่อ</a>
                     </li>                    
                 </ul>
