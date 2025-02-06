@@ -1,5 +1,6 @@
 import VernacularName from "@/Components/VernacularName";
 import BootstrapLayout from "@/Layouts/BootstrapLayout";
+import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 
 const PlantOccurrence = () => {
@@ -12,6 +13,7 @@ const PlantOccurrence = () => {
             country: "TH",
             limit: 10,
             kingdomKey: 6,
+            year: 2024,
         });
         const response = await fetch(
             // `http://localhost:8000/api/plants?search=${search}`
@@ -28,8 +30,9 @@ const PlantOccurrence = () => {
 
     return (
         <BootstrapLayout>
+            <Head title="Plant Species Occurrence" />
             <div className="container mt-4">
-                <h2 className="mb-3">Plant Species Search</h2>
+                <h2 className="mb-3">Plant Species Occurrence Search</h2>
 
                 <div className="input-group mb-3">
                     <input
@@ -48,6 +51,8 @@ const PlantOccurrence = () => {
                 <table className="table table-striped table-bordered">
                     <thead className="table-dark">
                         <tr>
+                            <th>Date</th>
+                            <th>Province</th>
                             <th>Species</th>
                             <th>Family</th>
                             <th>Genus</th>
@@ -59,6 +64,8 @@ const PlantOccurrence = () => {
                         {plants.length > 0 ? (
                             plants.map((plant) => (
                                 <tr key={plant.key}>
+                                    <td>{plant.eventDate}</td>
+                                    <td>{plant.stateProvince}</td>
                                     <td>{plant.species}</td>
                                     <td>{plant.family}</td>
                                     <td>{plant.genus}</td>
