@@ -2,6 +2,7 @@
 
 // use App\Http\Controllers\LineBotController;
 use App\Http\Controllers\PlantClassificationController;
+use App\Http\Controllers\PlantOccurrenceController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,11 +21,22 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 Route::get('/upload', [PlantClassificationController::class, 'showUploadForm'])->name('upload.form');
 Route::post('/classify', [PlantClassificationController::class, 'classifyPlant'])->name('classify.plant');
 
 
-Route::resource('/plants', PlantClassificationController::class);
+// Route::resource('/plants', PlantClassificationController::class);
+// Route::resource('/plants', PlantClassificationController::class);
+
+Route::prefix('plantnet')->group(function () {
+    Route::get('plants', [PlantClassificationController::class, 'index'])->name('plantnet.plants.index');
+});
+
+Route::prefix('gbif')->group(function () {
+    Route::prefix('plants')->group(function () {
+        Route::resource('occurrence', PlantOccurrenceController::class);        
+    });
+});

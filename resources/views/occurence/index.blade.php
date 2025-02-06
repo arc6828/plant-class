@@ -1,9 +1,9 @@
 <x-bootstrap title="Plant Database">
     <div class="container">
 
-        <h1 class="text-center">ฐานข้อมูลเอกลักษณ์พรรณพืช</h1>
+        <h1 class="text-center">ฐานข้อมูลเอกลักษณ์พรรณพืช : GBIF</h1>
         <!-- Search Form -->
-        <form method="GET" action="{{ route('plantnet.plants.index') }}" class="my-4">
+        <form method="GET" action="{{ route('occurrence.index') }}" class="my-4">
             <div class="input-group">
                 <input type="text" name="search" class="form-control" placeholder="Search plants..." value="{{ request('search') }}">
                 <button type="submit" class="btn btn-primary">Search</button>
@@ -49,6 +49,6 @@
                 </div>
         </section>
 
-        <small> บริการระบุชนิดพันธุ์พืชตามภาพที่ใช้มีพื้นฐานมาจาก API การจดจำ Pl@ntNet อัปเดตเป็นประจำและเข้าถึงได้ผ่านไซต์ <a href="https://my.plantnet.org">https://my.plantnet.org</a> </small>
+        <small> Powered by <a href="https://www.gbif.org/">https://www.gbif.org/</a> </small>
     </div>
 </x-bootstrap>
