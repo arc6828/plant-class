@@ -10,7 +10,8 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
     };
 
     return (
-        <nav className="d-flex flex-row justify-content-between">
+        <div className="row">
+<div className="col-lg-6">
             <ul className="pagination">
                 <li
                     className={`page-item ${
@@ -21,7 +22,7 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                         className="page-link"
                         onClick={() => handlePageChange(currentPage - 1)}
                     >
-                        Previous
+                        ก่อนหน้า
                     </button>
                 </li>
 
@@ -46,12 +47,13 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                         className="page-link"
                         onClick={() => handlePageChange(currentPage + 1)}
                     >
-                        Next
+                        ถัดไป
                     </button>
                 </li>
             </ul>
+</div>
             {count && (
-                <div>
+                <div className="col-lg-6">
                     <p class="text-muted">
                         <span class="px-1">แสดงผลลัพธ์</span>
                         <span class="fw-semibold px-1">{offset+1}</span>-
@@ -62,7 +64,7 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                     </p>
                 </div>
             )}
-        </nav>
+        </div>
     );
 }
 
