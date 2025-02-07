@@ -1,3 +1,4 @@
+import Pagination from "@/Components/Pagination";
 import Translation from "@/Components/Translation";
 import VernacularName from "@/Components/VernacularName";
 import BootstrapLayout from "@/Layouts/BootstrapLayout";
@@ -7,25 +8,29 @@ import { useEffect, useState } from "react";
 const PlantOccurrence = () => {
     const [search, setSearch] = useState("banana");
     const [plants, setPlants] = useState([]);
-    const [speciesDict, setSpeciesDict] = useState({});
+    const [paginationInfo, setPaginationInfo] = useState({ offset : 0 });
 
-    const handleSearch = async () => {
+    const handleSearch = async (offset=0) => {
         const currentYear = new Date().getFullYear();
         const params = new URLSearchParams({
             q: search,
             country: "TH",
             limit: 10,
             kingdomKey: 6,
-            year: "2023,2024",
-            // year: Array.from({ length: currentYear - 2021 + 1 }, (_, i) => 2021 + i).join(","),
+            year: `2020,${currentYear}`,
+            offset: offset,
         });
-        const response = await fetch(
-            // `http://localhost:8000/api/plants?search=${search}`
-            // `https://api.gbif.org/v1/occurrence/search?country=TH&kingdomKey=6&limit=10`
-            `https://api.gbif.org/v1/occurrence/search?${params.toString()}`
-        );
+        const url = `https://api.gbif.org/v1/occurrence/search?${params.toString()}`;
+        // `http://localhost:8000/api/plants?search=${search}`
+        // `https://api.gbif.org/v1/occurrence/search?country=TH&kingdomKey=6&limit=10`
+        console.log(url);
+        const response = await fetch(url);
         const data = await response.json();
+        // results
         setPlants(data.results);
+        const { results, ...pageInfo } = data;
+        console.log(pageInfo);
+        setPaginationInfo(pageInfo);
     };
 
     const getVernacularName = async (species_key) => {
@@ -38,21 +43,32 @@ const PlantOccurrence = () => {
                 `https://api.gbif.org/v1/species/${species_key}/vernacularNames`
             );
             const data = await response.json();
-            if(data.results.length > 0){
-                let filtered_data = data.results.filter((item)=>(item.language == "eng"));
-                filtered_data = filtered_data.length > 0 ? filtered_data[0] : data[0];
+            if (data.results.length > 0) {
+                let filtered_data = data.results.filter(
+                    (item) => item.language == "eng"
+                );
+                filtered_data =
+                    filtered_data.length > 0 ? filtered_data[0] : data[0];
                 return filtered_data.vernacularName;
-            }else{
+            } else {
                 return "-";
             }
-            
         } catch (error) {
             console.error("Error fetching transformed text:", error);
         }
     };
 
+    const handlePageChange = (newOffset) => {
+        setPaginationInfo((prev) => ({
+            ...prev,
+            offset: newOffset,
+            endOfRecords: newOffset + prev.limit >= prev.count,
+        }));
+        handleSearch(newOffset);
+    };
+
     useEffect(() => {
-        handleSearch();
+        handleSearch(0);
     }, [search]);
 
     return (
@@ -98,12 +114,20 @@ const PlantOccurrence = () => {
                                     <td>{plant.genus}</td>
                                     <td>
                                         <VernacularName
-                                            species_key={plant.speciesKey} getVernacularName={getVernacularName} language="EN"
+                                            species_key={plant.speciesKey}
+                                            getVernacularName={
+                                                getVernacularName
+                                            }
+                                            language="EN"
                                         ></VernacularName>
                                     </td>
                                     <td>
                                         <VernacularName
-                                            species_key={plant.speciesKey} getVernacularName={getVernacularName} language="TH"
+                                            species_key={plant.speciesKey}
+                                            getVernacularName={
+                                                getVernacularName
+                                            }
+                                            language="TH"
                                         ></VernacularName>
                                     </td>
                                 </tr>
@@ -117,6 +141,13 @@ const PlantOccurrence = () => {
                         )}
                     </tbody>
                 </table>
+
+                <div>
+                    <Pagination
+                        {...paginationInfo}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
             </div>
         </BootstrapLayout>
     );

@@ -18,7 +18,7 @@ ngrok http http://localhost:8000
 - UI Example
 https://www.gbif.org/occurrence/search
 
-https://www.gbif.org/occurrence/search?country=TH&taxon_key=6&year=2024,2025
+https://www.gbif.org/occurrence/search?country=TH&taxon_key=6&year=2023,2025
 
 - occurrence: TH | inaturalist.org | Plantae | 2024
 https://www.gbif.org/occurrence/search?country=TH&publishing_org=28eb1a3f-1c15-4a95-931a-4af90ecb574d&taxon_key=6&year=2024
