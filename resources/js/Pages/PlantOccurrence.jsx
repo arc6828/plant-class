@@ -4,6 +4,10 @@ import VernacularName from "@/Components/VernacularName";
 import BootstrapLayout from "@/Layouts/BootstrapLayout";
 import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import dayjs from "dayjs";
+import 'dayjs/locale/th'
+
+dayjs.locale("th"); // ตั้งค่าให้ใช้ภาษาไทย
 
 const PlantOccurrence = () => {
     const [search, setSearch] = useState("banana");
@@ -67,6 +71,14 @@ const PlantOccurrence = () => {
         }));
         handleSearch(newOffset);
     };
+
+    const ThaiTimeDisplay = (timeString) => {
+        // const thaiTime = dayjs().tz("Asia/Bangkok").format("DD MMMM YYYY, HH:mm:ss");
+        const year = parseInt(dayjs().year()) + 543;
+        const thaiTime = dayjs(timeString).format("DD MMMM") +  " " + year;
+      
+        return <div>🕒 {thaiTime}</div>;
+      };
 
     useEffect(() => {
         handleSearch(0);
@@ -153,6 +165,9 @@ const PlantOccurrence = () => {
                                                 }
                                                 language="TH"
                                             ></VernacularName>
+                                        </div>
+                                        <div className="card-text">
+                                            {ThaiTimeDisplay(plant.eventDate)}
                                         </div>
                                         <div className="card-text">
                                             {plant.stateProvince}

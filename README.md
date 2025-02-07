@@ -5,6 +5,9 @@
 php artisan make:model Plant -m
 php artisan make:seeder PlantSeeder
 php artisan db:seed --class=PlantSeeder
+
+npm install dayjs
+npm install dayjs-plugin-locale-data dayjs-plugin-locale-th
 ```
 
 ## ngrok
