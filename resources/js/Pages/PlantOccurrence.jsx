@@ -94,7 +94,7 @@ const PlantOccurrence = () => {
 
                 {/* View Mode Selection Dropdown */}
                 <div className="my-4 row text-end">
-                    <div className="col-6">
+                    <div className="col-lg-6">
                         <div className="input-group mb-3">
                             <input
                                 type="text"
@@ -112,10 +112,10 @@ const PlantOccurrence = () => {
                             </button>
                         </div>
                     </div>
-                    <label className="col-form-label col-3 fw-bold">
+                    <label className="col-form-label col-lg-2 fw-bold">
                         View Mode:
                     </label>
-                    <div className=" col-3">
+                    <div className=" col-lg-4">
                         <select
                             className="form-select"
                             value={viewMode}
