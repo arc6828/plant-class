@@ -77,7 +77,7 @@ const PlantOccurrence = () => {
         const year = parseInt(dayjs().year()) + 543;
         const thaiTime = dayjs(timeString).format("DD MMMM") +  " " + year;
       
-        return <div>🕒 {thaiTime}</div>;
+        return <span> {thaiTime}</span>;
       };
 
     useEffect(() => {
