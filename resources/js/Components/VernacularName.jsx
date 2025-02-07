@@ -13,7 +13,7 @@ const VernacularName = ({ species_key, getVernacularName , language}) => {
         onLoad();
     }, []);
     if (language == "EN") return <span>{text || "Loading..."}</span>;
-    else if (language == "TH" && text ) return <Translation text={text}></Translation>;
+    else if (language == "TH" && text ) return <Translation text={text} />;
     else return <span>{ "Loading..."}</span>;
 };
 

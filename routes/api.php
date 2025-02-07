@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\LineBotController;
+use App\Models\Dictionary;
 use App\Models\GBIF;
 use App\Models\Plant;
 use Illuminate\Http\Request;
@@ -34,4 +35,32 @@ Route::prefix('gbif')->group(function () {
             // return $plants;
         });
     });
+});
+
+Route::get('/dict', function () {
+    $dict = Dictionary::pluck('output','input');
+    return response()->json($dict); 
+});
+Route::get('/dictionary', function () {
+    $dict = Dictionary::all();
+    return response()->json($dict); 
+});
+Route::post('/dictionary', function (Request $request) {
+    // validation
+    $data = $request->validate([
+        'input' => 'required',
+        'output' => 'required',
+        // 'tags' => 'required',
+    ]);
+
+    // บันทึกลงฐานข้อมูล
+    $dict = Dictionary::firstOrCreate(
+        ['input' => $data['input']],
+        [
+            'output' => $data['output'],
+            // 'tags' => $data['tags'],
+        ]
+    );
+
+    return response()->json($dict);
 });

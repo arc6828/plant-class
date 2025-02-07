@@ -5,7 +5,7 @@ import BootstrapLayout from "@/Layouts/BootstrapLayout";
 import { Head } from "@inertiajs/react";
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
-import 'dayjs/locale/th'
+import "dayjs/locale/th";
 
 dayjs.locale("th"); // ตั้งค่าให้ใช้ภาษาไทย
 
@@ -13,7 +13,7 @@ const PlantOccurrence = () => {
     const [search, setSearch] = useState("banana");
     const [plants, setPlants] = useState([]);
     const [paginationInfo, setPaginationInfo] = useState({ offset: 0 });
-    const [viewMode, setViewMode] = useState("grid"); // Default view is "grid" || "table"
+    const [viewMode, setViewMode] = useState("grid"); // Default view is "grid" || "table"    
 
     const handleSearch = async (offset = 0) => {
         const currentYear = new Date().getFullYear();
@@ -75,10 +75,10 @@ const PlantOccurrence = () => {
     const ThaiTimeDisplay = (timeString) => {
         // const thaiTime = dayjs().tz("Asia/Bangkok").format("DD MMMM YYYY, HH:mm:ss");
         const year = parseInt(dayjs().year()) + 543;
-        const thaiTime = dayjs(timeString).format("DD MMMM") +  " " + year;
-      
+        const thaiTime = dayjs(timeString).format("DD MMMM") + " " + year;
+
         return <span> {thaiTime}</span>;
-      };
+    };
 
     useEffect(() => {
         handleSearch(0);
@@ -93,8 +93,8 @@ const PlantOccurrence = () => {
                 </h1>
 
                 {/* View Mode Selection Dropdown */}
-                <div className="my-4 row text-end">
-                    <div className="col-lg-6">
+                <div className="my-4 row  text-end">
+                    <div className="col-lg-6 col-md-12">
                         <div className="input-group mb-3">
                             <input
                                 type="text"
@@ -112,10 +112,10 @@ const PlantOccurrence = () => {
                             </button>
                         </div>
                     </div>
-                    <label className="col-form-label col-lg-2 fw-bold">
-                        View Mode:
+                    <label className="col-form-label col-lg-2 col-md-6 col-sm-6 fw-bold">
+                        แสดงผล:
                     </label>
-                    <div className=" col-lg-4">
+                    <div className=" col-lg-4  col-md-6 col-sm-6">
                         <select
                             className="form-select"
                             value={viewMode}
@@ -131,12 +131,12 @@ const PlantOccurrence = () => {
                 {viewMode === "grid" && (
                     <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mb-4">
                         {plants.map((plant) => (
-                            <div key={plant.id} className="col">
+                            <div key={plant.key} className="col">
                                 <div className="card mb-3 h-100">
                                     <img
-                                        src={plant.media[0].identifier}
+                                        src={plant.media[0]?plant.media[0].identifier:"/img/unnamed.jpg"}
                                         className="card-img-top"
-                                        alt={plant.title}
+                                        alt={plant.species}
                                         style={{
                                             height: "200px",
                                             objectFit: "cover",
@@ -144,7 +144,7 @@ const PlantOccurrence = () => {
                                     />
                                     <div className="card-body">
                                         <h5 className="card-title">
-                                            {plant.species}
+                                            {plant.species} ({plant.speciesKey})
                                         </h5>
                                         <div className="card-text">
                                             <span>{plant.scientificName}</span>
@@ -156,7 +156,7 @@ const PlantOccurrence = () => {
                                                     getVernacularName
                                                 }
                                                 language="EN"
-                                            ></VernacularName>
+                                            />
                                             <span> | </span>
                                             <VernacularName
                                                 species_key={plant.speciesKey}
@@ -164,13 +164,15 @@ const PlantOccurrence = () => {
                                                     getVernacularName
                                                 }
                                                 language="TH"
-                                            ></VernacularName>
+                                            />
                                         </div>
                                         <div className="card-text">
-                                            <i className="bi-calendar-date"></i> {ThaiTimeDisplay(plant.eventDate)}
+                                            <i className="bi-calendar-date"></i>{" "}
+                                            {ThaiTimeDisplay(plant.eventDate)}
                                         </div>
                                         <div className="card-text">
-                                            <i className="bi-geo"></i> {plant.stateProvince}
+                                            <i className="bi-geo"></i>{" "}
+                                            <Translation text={plant.stateProvince} />
                                         </div>
                                     </div>
                                 </div>
@@ -181,56 +183,62 @@ const PlantOccurrence = () => {
 
                 {/* Table View */}
                 {viewMode === "table" && (
-                    <table className="table table-striped table-bordered">
-                        <thead className="table-dark">
-                            <tr>
-                                <th>Date</th>
-                                <th>Province</th>
-                                <th>Species</th>
-                                <th>Family</th>
-                                <th>Genus</th>
-                                <th>Common Name</th>
-                                <th>TH</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {plants.length > 0 ? (
-                                plants.map((plant) => (
-                                    <tr key={plant.key}>
-                                        <td>{plant.eventDate}</td>
-                                        <td>{plant.stateProvince}</td>
-                                        <td>{plant.species} </td>
-                                        <td>{plant.family}</td>
-                                        <td>{plant.genus}</td>
-                                        <td>
-                                            <VernacularName
-                                                species_key={plant.speciesKey}
-                                                getVernacularName={
-                                                    getVernacularName
-                                                }
-                                                language="EN"
-                                            ></VernacularName>
-                                        </td>
-                                        <td>
-                                            <VernacularName
-                                                species_key={plant.speciesKey}
-                                                getVernacularName={
-                                                    getVernacularName
-                                                }
-                                                language="TH"
-                                            ></VernacularName>
+                    <div className="table-responsive">
+                        <table className="table table-striped table-bordered">
+                            <thead className="table-dark">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Province</th>
+                                    <th>Species</th>
+                                    <th>Family</th>
+                                    <th>Genus</th>
+                                    <th>Common Name</th>
+                                    <th>TH</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {plants.length > 0 ? (
+                                    plants.map((plant) => (
+                                        <tr key={plant.key}>
+                                            <td>{plant.eventDate}</td>
+                                            <td>{plant.stateProvince}</td>
+                                            <td>{plant.species} </td>
+                                            <td>{plant.family}</td>
+                                            <td>{plant.genus}</td>
+                                            <td>
+                                                <VernacularName
+                                                    species_key={
+                                                        plant.speciesKey
+                                                    }
+                                                    getVernacularName={
+                                                        getVernacularName
+                                                    }
+                                                    language="EN"
+                                                />
+                                            </td>
+                                            <td>
+                                                <VernacularName
+                                                    species_key={
+                                                        plant.speciesKey
+                                                    }
+                                                    getVernacularName={
+                                                        getVernacularName
+                                                    }
+                                                    language="TH"
+                                                />
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="4" className="text-center">
+                                            No results found
                                         </td>
                                     </tr>
-                                ))
-                            ) : (
-                                <tr>
-                                    <td colSpan="4" className="text-center">
-                                        No results found
-                                    </td>
-                                </tr>
-                            )}
-                        </tbody>
-                    </table>
+                                )}
+                            </tbody>
+                        </table>
+                    </div>
                 )}
                 <div>
                     <Pagination

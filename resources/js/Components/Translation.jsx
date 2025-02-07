@@ -1,38 +1,35 @@
+import DictionaryService from "@/Services/DictionaryService";
+import { usePage } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
 const Translation = ({ text }) => {
     const [transformedText, setTransformedText] = useState("");
+    const { dictionary } = usePage().props
 
     const getTranslation = async () => {
         if (!text) return;
 
-        // console.log("name");
-        try {
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ input : text })
-            };
-            const url = `https://ml.ckartisan.com/nlp/translate`;
-            const response = await fetch( url , options );
-            const data = await response.json();
-            
-            setTransformedText(data.output);
-        } catch (error) {
-            console.error("Error fetching transformed text:", error);
-            // setTransformedText("...");
+        // hit dictionary
+        if (text in dictionary) {
+            console.log("HIT Dicationary");
+            setTransformedText(dictionary[text]);   
+            return;
         }
+
+        // hit google
+        console.log("HIT Google", text);
+        const results = await DictionaryService.translate(text);
+        results && setTransformedText(results.output);        
     };
 
     useEffect(() => {
         getTranslation();
+        // console.log(dictionary);
     }, [text]);
 
     return (
         <span>            
-            { transformedText || "Loading..."}
+            { transformedText || text }
         </span>
     );
 };

@@ -7,7 +7,8 @@ php artisan make:seeder PlantSeeder
 php artisan db:seed --class=PlantSeeder
 
 npm install dayjs
-npm install dayjs-plugin-locale-data dayjs-plugin-locale-th
+
+php artisan make:model Translation -m
 ```
 
 ## ngrok
@@ -34,6 +35,8 @@ https://api.gbif.org/v1/occurrence/search
 https://api.gbif.org/v1/occurrence/search?country=TH&kingdomKey=6&limit=10
 
 http://localhost:8000/api/gbif/plants/occurrence?offset=100
+
+https://api.gbif.org/v1/species/5383898
 
 
 ## License
