@@ -167,10 +167,10 @@ const PlantOccurrence = () => {
                                             ></VernacularName>
                                         </div>
                                         <div className="card-text">
-                                            {ThaiTimeDisplay(plant.eventDate)}
+                                            <i className="bi-calendar-date"></i> {ThaiTimeDisplay(plant.eventDate)}
                                         </div>
                                         <div className="card-text">
-                                            {plant.stateProvince}
+                                            <i className="bi-geo"></i> {plant.stateProvince}
                                         </div>
                                     </div>
                                 </div>
