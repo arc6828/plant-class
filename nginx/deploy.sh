@@ -34,6 +34,7 @@ php artisan route:clear
 # php artisan queue:restart
 # systemctl restart php8.2-fpm
 
-echo "Deployment completed at $(date)" >> /var/log/deploy.log
+echo "Deployment completed at $(date)"
+# echo "Deployment completed at $(date)" >> /var/log/deploy.log
 
 

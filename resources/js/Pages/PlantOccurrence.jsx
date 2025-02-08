@@ -10,17 +10,17 @@ import "dayjs/locale/th";
 dayjs.locale("th"); // ตั้งค่าให้ใช้ภาษาไทย
 
 const PlantOccurrence = () => {
-    const [search, setSearch] = useState("banana");
+    const [search, setSearch] = useState("");
     const [plants, setPlants] = useState([]);
     const [paginationInfo, setPaginationInfo] = useState({ offset: 0 });
-    const [viewMode, setViewMode] = useState("grid"); // Default view is "grid" || "table"    
+    const [viewMode, setViewMode] = useState("grid"); // Default view is "grid" || "table"
 
     const handleSearch = async (offset = 0) => {
         const currentYear = new Date().getFullYear();
         const params = new URLSearchParams({
             q: search,
             country: "TH",
-            limit: 9,
+            limit: 6,
             kingdomKey: 6,
             year: `2020,${currentYear}`,
             offset: offset,
@@ -36,31 +36,6 @@ const PlantOccurrence = () => {
         const { results, ...pageInfo } = data;
         console.log(pageInfo);
         setPaginationInfo(pageInfo);
-    };
-
-    const getVernacularName = async (species_key) => {
-        if (!species_key) return;
-
-        // console.log("name");
-        try {
-            const response = await fetch(
-                // `https://api.gbif.org/v1/species/2760990/vernacularNames`
-                `https://api.gbif.org/v1/species/${species_key}/vernacularNames`
-            );
-            const data = await response.json();
-            if (data.results.length > 0) {
-                let filtered_data = data.results.filter(
-                    (item) => item.language == "eng"
-                );
-                filtered_data =
-                    filtered_data.length > 0 ? filtered_data[0] : data[0];
-                return filtered_data.vernacularName;
-            } else {
-                return "-";
-            }
-        } catch (error) {
-            console.error("Error fetching transformed text:", error);
-        }
     };
 
     const handlePageChange = (newOffset) => {
@@ -99,7 +74,7 @@ const PlantOccurrence = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Enter plant name..."
+                                placeholder="กรอกชื่อของพืช เช่น Banana ..."
                                 value={search}
                                 onInput={(e) => setSearch(e.target.value)}
                                 onChange={(e) => setSearch(e.target.value)}
@@ -134,7 +109,11 @@ const PlantOccurrence = () => {
                             <div key={plant.key} className="col">
                                 <div className="card mb-3 h-100">
                                     <img
-                                        src={plant.media[0]?plant.media[0].identifier:"/img/unnamed.jpg"}
+                                        src={
+                                            plant.media[0]
+                                                ? plant.media[0].identifier
+                                                : "/img/unnamed.jpg"
+                                        }
                                         className="card-img-top"
                                         alt={plant.species}
                                         style={{
@@ -153,17 +132,11 @@ const PlantOccurrence = () => {
                                             <i className="bi-tree"></i>{" "}
                                             <VernacularName
                                                 species_key={plant.speciesKey}
-                                                getVernacularName={
-                                                    getVernacularName
-                                                }
                                                 language="EN"
                                             />
                                             <span> | </span>
                                             <VernacularName
                                                 species_key={plant.speciesKey}
-                                                getVernacularName={
-                                                    getVernacularName
-                                                }
                                                 language="TH"
                                             />
                                         </div>
@@ -173,7 +146,9 @@ const PlantOccurrence = () => {
                                         </div>
                                         <div className="card-text">
                                             <i className="bi-geo"></i>{" "}
-                                            <Translation text={plant.stateProvince} />
+                                            <Translation
+                                                text={plant.stateProvince} tags="stateProvince"
+                                            />
                                         </div>
                                     </div>
                                 </div>
@@ -201,8 +176,12 @@ const PlantOccurrence = () => {
                                 {plants.length > 0 ? (
                                     plants.map((plant) => (
                                         <tr key={plant.key}>
-                                            <td>{plant.eventDate}</td>
-                                            <td>{plant.stateProvince}</td>
+                                            <td>{ThaiTimeDisplay(plant.eventDate)}</td>
+                                            <td>
+                                                <Translation
+                                                    text={plant.stateProvince} tags="จังหวัด"
+                                                />
+                                            </td>
                                             <td>{plant.species} </td>
                                             <td>{plant.family}</td>
                                             <td>{plant.genus}</td>
@@ -210,9 +189,6 @@ const PlantOccurrence = () => {
                                                 <VernacularName
                                                     species_key={
                                                         plant.speciesKey
-                                                    }
-                                                    getVernacularName={
-                                                        getVernacularName
                                                     }
                                                     language="EN"
                                                 />
@@ -222,9 +198,6 @@ const PlantOccurrence = () => {
                                                     species_key={
                                                         plant.speciesKey
                                                     }
-                                                    getVernacularName={
-                                                        getVernacularName
-                                                    }
                                                     language="TH"
                                                 />
                                             </td>
@@ -233,7 +206,7 @@ const PlantOccurrence = () => {
                                 ) : (
                                     <tr>
                                         <td colSpan="4" className="text-center">
-                                            No results found
+                                            ไม่พบข้อมูล
                                         </td>
                                     </tr>
                                 )}

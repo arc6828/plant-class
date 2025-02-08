@@ -1,4 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
+import "../../css/tailwind.css";
 
 export default function Welcome({ auth, laravelVersion, phpVersion }) {
     const handleImageError = () => {

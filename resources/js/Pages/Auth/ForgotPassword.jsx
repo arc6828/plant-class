@@ -3,6 +3,7 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, useForm } from '@inertiajs/react';
+import "../../../css/tailwind.css";
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({

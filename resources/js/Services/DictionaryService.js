@@ -1,5 +1,5 @@
 const DictionaryService = {
-    async translate(text) {
+    async translate(text,tags) {
         if (!text) return;
 
         try {
@@ -14,11 +14,11 @@ const DictionaryService = {
             const data = await response.json();
 
             // update dictionary
-            await this.addDictionry(data);
+            await this.addDictionry({ ...data, tags });
 
             return data; // { input , output }
         } catch (error) {
-            console.error("Error fetching transformed text:", error);
+            console.error("Error fetching transformed text:", error,text);
             return;
         }
     },

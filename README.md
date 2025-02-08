@@ -9,6 +9,11 @@ php artisan db:seed --class=PlantSeeder
 npm install dayjs
 
 php artisan make:model Translation -m
+
+php artisan make:controller Api/DictionaryController --api
+
+php artisan make:controller Api/DeployController --api
+
 ```
 
 ## ngrok

@@ -1,6 +1,7 @@
 import PrimaryButton from '@/Components/PrimaryButton';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import "../../../css/tailwind.css";
 
 export default function VerifyEmail({ status }) {
     const { post, processing } = useForm({});

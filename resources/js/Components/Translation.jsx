@@ -2,7 +2,7 @@ import DictionaryService from "@/Services/DictionaryService";
 import { usePage } from "@inertiajs/react";
 import { useState, useEffect } from "react";
 
-const Translation = ({ text }) => {
+const Translation = ({ text, tags }) => {
     const [transformedText, setTransformedText] = useState("");
     const { dictionary } = usePage().props
 
@@ -18,7 +18,7 @@ const Translation = ({ text }) => {
 
         // hit google
         console.log("HIT Google", text);
-        const results = await DictionaryService.translate(text);
+        const results = await DictionaryService.translate(text,tags);
         results && setTransformedText(results.output);        
     };
 

@@ -11,6 +11,7 @@ class Dictionary extends Model
         'input',
         'output',
         'tags',
+        'approved',
     ];
 
 }

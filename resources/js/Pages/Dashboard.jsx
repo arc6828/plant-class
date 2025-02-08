@@ -1,5 +1,6 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Head } from '@inertiajs/react';
+import "../../css/tailwind.css";
 
 export default function Dashboard() {
     return (

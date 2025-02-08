@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\DeployController;
+use App\Http\Controllers\Api\DictionaryController;
 use App\Http\Controllers\LineBotController;
 use App\Models\Dictionary;
 use App\Models\GBIF;
@@ -37,89 +39,8 @@ Route::prefix('gbif')->group(function () {
     });
 });
 
-Route::get('/dict', function () {
-    $dict = Dictionary::pluck('output', 'input');
-    return response()->json($dict);
-});
-Route::get('/dictionary', function () {
-    $dict = Dictionary::all();
-    return response()->json($dict);
-});
-Route::post('/dictionary', function (Request $request) {
-    // validation
-    $data = $request->validate([
-        'input' => 'required',
-        'output' => 'required',
-        // 'tags' => 'required',
-    ]);
+Route::get('/dict', [DictionaryController::class,'mapKeyValue']);
+Route::apiResource('/dictionary',DictionaryController::class);
+Route::apiResource('/deploy', DeployController::class);
 
-    // บันทึกลงฐานข้อมูล
-    $dict = Dictionary::firstOrCreate(
-        ['input' => $data['input']],
-        [
-            'output' => $data['output'],
-            // 'tags' => $data['tags'],
-        ]
-    );
 
-    return response()->json($dict);
-});
-
-Route::get('/deploy', function (Request $request) {
-    try {
-        
-        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &',$output, $return_var);
-        
-        $data = [
-            "status" => "success", 
-            "messsage" => "Deployment triggered",
-            "console" => $output,
-        ];
-
-        return response()->json($data);
-    } catch (Exception $e) {
-        $data = [
-            "status" => "fail", 
-            "messsage" => $e->getMessage(),
-        ];
-        return response()->json($data);
-    }
-});
-
-Route::post('/deploy', function (Request $request) {
-    try {
-        $secret = "thisisabook"; // Optional if you set a webhook secret
-        $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'] ?? '';
-
-        // Verify signature
-        // if ($secret && !hash_equals('sha1=' . hash_hmac('sha1', file_get_contents('php://input'), $secret), $signature)) {
-        //     http_response_code(403);
-        //     exit('Invalid signature');
-        // }
-
-        // Run the deploy script
-        // $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
-        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &',$output, $return_var);
-
-        // if ($return_var === 0) {
-        //     echo "Command executed successfully.\n";
-        //     print_r($output); // Print the output of the ls command
-        // } else {
-        //     echo "Command failed with exit code: " . $return_var . "\n";
-        // }
-        // echo "Deployment triggered";
-        $data = [
-            "status" => "success", 
-            "messsage" => "Deployment triggered",
-            "console" => $output,
-        ];
-
-        // return response()->json($data);
-    } catch (Exception $e) {
-        $data = [
-            "status" => "fail", 
-            "messsage" => $e->getMessage(),
-        ];
-        return response()->json($data);
-    }
-});

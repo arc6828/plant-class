@@ -22,7 +22,7 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                             className="page-link"
                             onClick={() => handlePageChange(currentPage - 1)}
                         >
-                            <bi className="bi-caret-left-fill"></bi>
+                            <i className="bi-caret-left-fill"></i>
                         </button>
                     </li>
 
@@ -49,7 +49,7 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                             className="page-link"
                             onClick={() => handlePageChange(currentPage + 1)}
                         >
-                            <bi className="bi-caret-right-fill"></bi>
+                            <i className="bi-caret-right-fill"></i>
                         </button>
                     </li>
                 </ul>
