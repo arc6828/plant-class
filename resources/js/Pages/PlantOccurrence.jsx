@@ -113,7 +113,7 @@ const PlantOccurrence = () => {
                         </div>
                     </div>
                     <label className="col-form-label col-lg-2 col-md-6 col-sm-6 fw-bold">
-                        แสดงผล:
+                        การแสดงผล:
                     </label>
                     <div className=" col-lg-4  col-md-6 col-sm-6">
                         <select
