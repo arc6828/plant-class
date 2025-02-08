@@ -77,7 +77,8 @@ Route::post('/deploy', function (Request $request) {
         // }
 
         // Run the deploy script
-        $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
+        // $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
+        $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh');
         // echo "Deployment triggered";
         $data = [
             "status" => "success", 
