@@ -11,8 +11,8 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
 
     return (
         <div className="row">
-            <div className="col-lg-6">
-                <ul className="pagination">
+            <div className="col-lg-6 text-lg-start text-center">
+                <ul className="pagination justify-content-lg-start justify-content-center">
                     <li
                         className={`page-item ${
                             currentPage === 1 ? "disabled" : ""
@@ -29,15 +29,13 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                     {Array.from({ length: totalPages }, (_, i) => (
                         <li
                             key={i}
-                            className={`page-item ${
-                                currentPage === i + 1 ? "active" : ""
-                            }`}
+                            className={`page-item ${ currentPage === i + 1 ? "active" : "" } ${ Math.abs(currentPage - i) > 3 ? "pagination-item-exceed" : "" } `}
                         >
                             <button
                                 className="page-link"
                                 onClick={() => handlePageChange(i + 1)}
                             >
-                                {i + 1}
+                                { Math.abs(currentPage - i) >= 3 ? " : " : (i+1) }
                             </button>
                         </li>
                     ))}
@@ -57,7 +55,7 @@ function Pagination({ offset, limit, count, endOfRecords, onPageChange }) {
                 </ul>
             </div>
             {count && (
-                <div className="col-lg-6">
+                <div className="col-lg-6  text-lg-end text-center">
                     <p className="text-muted">
                         <span className="px-1">แสดงผลลัพธ์</span>
                         <span className="fw-semibold px-1">{offset + 1}</span>-

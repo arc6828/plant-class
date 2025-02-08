@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.pagination-item-exceed:not(:first-of-type) {
+    display: none;
+}
+
