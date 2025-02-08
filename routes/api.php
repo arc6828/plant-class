@@ -65,6 +65,27 @@ Route::post('/dictionary', function (Request $request) {
     return response()->json($dict);
 });
 
+Route::get('/deploy', function (Request $request) {
+    try {
+        
+        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &',$output, $return_var);
+        
+        $data = [
+            "status" => "success", 
+            "messsage" => "Deployment triggered",
+            "console" => $output,
+        ];
+
+        return response()->json($data);
+    } catch (Exception $e) {
+        $data = [
+            "status" => "fail", 
+            "messsage" => $e->getMessage(),
+        ];
+        return response()->json($data);
+    }
+});
+
 Route::post('/deploy', function (Request $request) {
     try {
         $secret = "thisisabook"; // Optional if you set a webhook secret
