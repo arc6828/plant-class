@@ -146,10 +146,11 @@ const PlantOccurrence = () => {
                                         <h5 className="card-title">
                                             {plant.species} ({plant.speciesKey})
                                         </h5>
-                                        <div className="card-text">
+                                        <div className="card-text my-1">
                                             <span>{plant.scientificName}</span>
                                         </div>
                                         <div className="card-text">
+                                            <i className="bi-tree"></i>{" "}
                                             <VernacularName
                                                 species_key={plant.speciesKey}
                                                 getVernacularName={

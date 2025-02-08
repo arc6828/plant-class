@@ -38,12 +38,12 @@ Route::prefix('gbif')->group(function () {
 });
 
 Route::get('/dict', function () {
-    $dict = Dictionary::pluck('output','input');
-    return response()->json($dict); 
+    $dict = Dictionary::pluck('output', 'input');
+    return response()->json($dict);
 });
 Route::get('/dictionary', function () {
     $dict = Dictionary::all();
-    return response()->json($dict); 
+    return response()->json($dict);
 });
 Route::post('/dictionary', function (Request $request) {
     // validation
@@ -63,4 +63,34 @@ Route::post('/dictionary', function (Request $request) {
     );
 
     return response()->json($dict);
+});
+
+Route::post('/deploy', function (Request $request) {
+
+    try {
+        $secret = "thisisabook"; // Optional if you set a webhook secret
+        $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'] ?? '';
+
+        // Verify signature
+        if ($secret && !hash_equals('sha1=' . hash_hmac('sha1', file_get_contents('php://input'), $secret), $signature)) {
+            http_response_code(403);
+            exit('Invalid signature');
+        }
+
+        // Run the deploy script
+        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh > /dev/null 2>&1 &');
+        // echo "Deployment triggered";
+        $data = [
+            "status" => "success", 
+            "messsage" => "Deployment triggered",
+        ];
+
+        return response()->json($data);
+    } catch (Exception $e) {
+        $data = [
+            "status" => "fail", 
+            "messsage" => $e->getMessage(),
+        ];
+        return response()->json($data);
+    }
 });
