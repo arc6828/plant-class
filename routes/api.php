@@ -78,20 +78,20 @@ Route::post('/deploy', function (Request $request) {
 
         // Run the deploy script
         // $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
-        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh',$output, $return_var);
+        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &',$output, $return_var);
 
-        if ($return_var === 0) {
-            echo "Command executed successfully.\n";
-            print_r($output); // Print the output of the ls command
-        } else {
-            echo "Command failed with exit code: " . $return_var . "\n";
-        }
-        // // echo "Deployment triggered";
-        // $data = [
-        //     "status" => "success", 
-        //     "messsage" => "Deployment triggered",
-        //     "console" => $output,
-        // ];
+        // if ($return_var === 0) {
+        //     echo "Command executed successfully.\n";
+        //     print_r($output); // Print the output of the ls command
+        // } else {
+        //     echo "Command failed with exit code: " . $return_var . "\n";
+        // }
+        // echo "Deployment triggered";
+        $data = [
+            "status" => "success", 
+            "messsage" => "Deployment triggered",
+            "console" => $output,
+        ];
 
         // return response()->json($data);
     } catch (Exception $e) {
