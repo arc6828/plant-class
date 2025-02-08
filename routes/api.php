@@ -66,7 +66,6 @@ Route::post('/dictionary', function (Request $request) {
 });
 
 Route::post('/deploy', function (Request $request) {
-
     try {
         $secret = "thisisabook"; // Optional if you set a webhook secret
         $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'] ?? '';
