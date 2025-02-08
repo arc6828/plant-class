@@ -71,17 +71,18 @@ Route::post('/deploy', function (Request $request) {
         $signature = $_SERVER['HTTP_X_HUB_SIGNATURE'] ?? '';
 
         // Verify signature
-        if ($secret && !hash_equals('sha1=' . hash_hmac('sha1', file_get_contents('php://input'), $secret), $signature)) {
-            http_response_code(403);
-            exit('Invalid signature');
-        }
+        // if ($secret && !hash_equals('sha1=' . hash_hmac('sha1', file_get_contents('php://input'), $secret), $signature)) {
+        //     http_response_code(403);
+        //     exit('Invalid signature');
+        // }
 
         // Run the deploy script
-        exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
+        $output = shell_exec('/bin/bash /var/www/plants.samkhok.org/deploy.sh >> /var/log/deploy.log 2>&1 &');
         // echo "Deployment triggered";
         $data = [
             "status" => "success", 
             "messsage" => "Deployment triggered",
+            "console" => $output,
         ];
 
         return response()->json($data);
