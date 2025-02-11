@@ -1,5 +1,3 @@
-
-
 export default function BootstrapLayout({ children }) {
     return (
         <div>

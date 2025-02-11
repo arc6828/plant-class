@@ -50,3 +50,7 @@ Route::prefix('gbif')->group(function () {
 Route::get('/occurrence',function(){
     return Inertia::render('PlantOccurrence');
 })->name('occurrence');
+
+Route::get('/quickstart',function(){
+    return view("quickstart");
+})->name('quickstart');
