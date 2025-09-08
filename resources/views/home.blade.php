@@ -46,5 +46,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- Line App Section -->
+        <div class="text-center mt-5">
+            <h2 class="fw-bold mb-3">เชื่อมต่อผ่าน LINE Application</h2>
+            <p class="text-muted mb-4">
+                เพิ่มเพื่อนใน LINE แล้วส่งภาพพรรณไม้เพื่อรับการวิเคราะห์และข้อมูลพรรณไม้ได้ทันที
+            </p>
+            <img src="{{ asset('img/M_285yxxte_BW.png') }}" alt="LINE QR Code" class="img-fluid"
+                style="max-width: 200px;">
+            <p class="text-muted mt-2">สแกน QR Code เพื่อเพิ่มเพื่อนใน LINE</p>
+            
+            <!-- Line App Example Section -->
+            <div class="text-center mt-4">
+                <img src="{{ asset('img/example-line-2.jpg') }}" alt="LINE App Example" class="img-fluid rounded"
+                    style="max-width: 400px;">
+                <p class="text-muted mt-2">ตัวอย่างการใช้งานผ่าน LINE Application</p>
+            </div>
+        </div>
+
     </div>
 </x-layout>
