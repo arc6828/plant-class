@@ -19,6 +19,8 @@ class Plant extends Model
         'images',
         'num_images',
         'num_observations',
+        'scientific_name',
+        'description',
     ];
 
     // Declare the 'images' attribute as an array since it's stored as JSON in the database
