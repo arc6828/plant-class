@@ -72,7 +72,7 @@ Route::post('/plant-identification', function (Request $request) {
     if ($response->successful()) {
         $data = $response->json();
         $result = $data['candidates'][0]['content']['parts'][0]['text'] ?? "ไม่พบข้อมูล";
-    }else{
+    } else {
         $result = "Error: " . $response->status() . " - " . $response->body();
     }
 
@@ -108,3 +108,33 @@ Route::get('/quickstart', function () {
 Route::get('/plants', [PlantController::class, 'index'])->name('plants.index');
 Route::get('/plants/{plant}', [PlantController::class, 'show'])->name('plants.show');
 
+Route::get('/about', function () {
+    $researchers = [
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/wisrut.jpg", "name" => "อ.วิศรุต ขวัญคุ้ม", "position" => "หัวหน้าโครงการวิจัย", "organization" => "หลักสูตรวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/ing_orn.jpg", "name" => "ผศ.อิงอร วงษ์ศรีรักษา", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/phairin.jpg", "name" => "ผศ.ไพรินทร์ มีศรี", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/kamolmas.jpg", "name" => "ผศ.กมลมาศ วงษ์ใหญ่", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/daorathar.jpg", "name" => "ดร.ดาวรถา วีระพันธ์", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/natradee.jpg", "name" => "อ.ณัฐรดี อนุพงค์", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/chavalit.jpg", "name" => "อ.ชวลิต โควีระวงศ์", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรวิทยาการคอมพิวเตอร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+        (object)["image" => "https://raw.githubusercontent.com/arc6828/samkhok/main/assets/img/researchers/pannarat.jpg", "name" => "อ.ปัณณรัตน์ วงศ์พัฒนานิภาส", "position" => "ผู้ช่วยโครงการวิจัย", "organization" => "หลักสูตรนวัตกรรมดิจิทัลและวิศวกรรมซอฟต์แวร์ คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์"],
+    ];
+    return view('about', compact('researchers'));
+})->name('about');
+Route::get('/contact', function () {
+    return view('contact');
+})->name('contact');
+// contact.send
+Route::post('/contact', function (Request $request) {
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'message' => 'required|string',
+    ]);
+
+    // Send email or store message in database
+    return back()->with('success', 'ข้อความของคุณถูกส่งเรียบร้อยแล้ว');
+})->name('contact.send');   
+Route::get('/research-results', function () {
+    return view('research-results');
+})->name('research.results');
