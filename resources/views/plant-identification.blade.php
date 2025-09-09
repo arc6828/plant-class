@@ -68,7 +68,7 @@
                                         @foreach ($plant->images as $index => $img)
                                             <div class="carousel-item @if ($index == 0) active @endif">
                                                 <img src="{{ $img }}" class="d-block w-100 rounded shadow-sm"
-                                                    alt="{{ $plant->scientific_name }}">
+                                                    alt="{{ $plant->common_name_th }}">
                                             </div>
                                         @endforeach
                                     </div>
