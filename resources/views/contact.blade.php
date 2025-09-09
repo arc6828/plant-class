@@ -23,7 +23,7 @@
                         <div class="card shadow-sm border-0 rounded-3">
                             <div class="card-body">
                                 <h5 class="fw-bold mb-3">ข้อมูลการติดต่อหัวหน้าวิจัย</h5>
-                                <p><i class="bi bi-person-fill text-success"></i><label><strong> อ.วิศรุต ขวัญคุ้ม</strong> (หัวหน้าโครงการวิจัย)</label></p>
+                                <p><i class="bi bi-person-fill text-success"></i><label><strong> ผศ.ดร.วิศรุต ขวัญคุ้ม</strong> (หัวหน้าโครงการวิจัย)</label></p>
                                 <p><i class="bi bi-geo-alt-fill text-success"></i> คณะวิทยาศาสตร์และเทคโนโลยี มหาวิทยาลัยราชภัฏวไลยอลงกรณ์ ในพระบรมราชูปถัมภ์ จังหวัดปทุมธานี</p>
                                 <p><i class="bi bi-envelope-fill text-success"></i> wisrut@vru.ac.th</p>
                                 <p><i class="bi bi-telephone-fill text-success"></i> 08-6202-0656</p>
