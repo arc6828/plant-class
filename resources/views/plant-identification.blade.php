@@ -47,10 +47,18 @@
                                 $plant = \App\Models\Plant::where('scientific_name', $result->scientific_name)->first();
                                 // if null query from soft condition
                                 if (!$plant) {
-                                    $plant = \App\Models\Plant::where('common_name', 'like', "%{$result->common_name_en}%")->first();
+                                    $plant = \App\Models\Plant::where(
+                                        'common_name',
+                                        'like',
+                                        "%{$result->common_name_en}%",
+                                    )->first();
                                 }
                                 if (!$plant) {
-                                    $plant = \App\Models\Plant::where('common_name_th', 'like', "%{$result->common_name_th}%")->first();
+                                    $plant = \App\Models\Plant::where(
+                                        'common_name_th',
+                                        'like',
+                                        "%{$result->common_name_th}%",
+                                    )->first();
                                 }
 
                             @endphp
@@ -67,10 +75,16 @@
                                     {{-- <img src="{{ }}" class="card-img-top"
                                         alt="{{ $plant->common_name_en }}"> --}}
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $plant->common_name_en }}
+                                        <h5 class="card-title">{{ $plant->common_name }}
                                             ({{ $plant->common_name_th }})</h5>
                                         <p class="card-text">{{ $plant->description }}</p>
                                     </div>
+                                    {{-- ลิงค์ไปยังหน้ารายละเอียด --}}
+                                    <div class="card-footer text-end">
+                                        <a href="{{ route('plants.show', $plant) }}"
+                                            class="btn btn-primary">ดูรายละเอียดเพิ่มเติม</a>
+                                    </div>
+
                                 </div>
                             @endif
                         @else
