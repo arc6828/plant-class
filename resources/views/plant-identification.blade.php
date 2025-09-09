@@ -64,16 +64,26 @@
                             @endphp
                             @if ($plant)
                                 <div class="card mt-3">
-                                    <div class="carousel-inner">
-                                        @foreach ($plant->images as $index => $img)
-                                            <div class="carousel-item @if ($index == 0) active @endif">
-                                                <img src="{{ $img }}" class="d-block w-100 rounded shadow-sm"
-                                                    alt="{{ $plant->common_name_th }}">
-                                            </div>
-                                        @endforeach
+                                    <div id="plantCarousel" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            @foreach ($plant->images as $index => $img)
+                                                <div
+                                                    class="carousel-item @if ($index == 0) active @endif">
+                                                    <img src="{{ $img }}"
+                                                        class="d-block w-100 rounded shadow-sm"
+                                                        alt="{{ $plant->common_name_th }}">
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                        <button class="carousel-control-prev" type="button"
+                                            data-bs-target="#plantCarousel" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon"></span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button"
+                                            data-bs-target="#plantCarousel" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon"></span>
+                                        </button>
                                     </div>
-                                    {{-- <img src="{{ }}" class="card-img-top"
-                                        alt="{{ $plant->common_name_en }}"> --}}
                                     <div class="card-body">
                                         <h5 class="card-title">{{ $plant->common_name_th }}
                                             ({{ $plant->common_name }})</h5>
