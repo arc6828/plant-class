@@ -75,12 +75,12 @@
                                     {{-- <img src="{{ }}" class="card-img-top"
                                         alt="{{ $plant->common_name_en }}"> --}}
                                     <div class="card-body">
-                                        <h5 class="card-title">{{ $plant->common_name }}
-                                            ({{ $plant->common_name_th }})</h5>
+                                        <h5 class="card-title">{{ $plant->common_name_th }}
+                                            ({{ $plant->common_name }})</h5>
                                         <p class="card-text">{{ $plant->description }}</p>
                                     </div>
                                     {{-- ลิงค์ไปยังหน้ารายละเอียด --}}
-                                    <div class="card-footer text-end">
+                                    <div class="card-footer text-center">
                                         <a href="{{ route('plants.show', $plant) }}"
                                             class="btn btn-primary">ดูรายละเอียดเพิ่มเติม</a>
                                     </div>
