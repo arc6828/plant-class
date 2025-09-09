@@ -41,13 +41,45 @@
                                 <li><strong>ชื่อสามัญ (อังกฤษ):</strong> {{ $result->common_name_en }}</li>
                                 <li><strong>รายละเอียด:</strong> {{ $result->description }}</li>
                             </ul>
+                            {{-- Query ข้อมูลจาก DB --}}
+                            @php
+                                // Query
+                                $plant = \App\Models\Plant::where('scientific_name', $result->scientific_name)->first();
+                                // if null query from soft condition
+                                if (!$plant) {
+                                    $plant = \App\Models\Plant::where('common_name', 'like', "%{$result->common_name_en}%")->first();
+                                }
+                                if (!$plant) {
+                                    $plant = \App\Models\Plant::where('common_name_th', 'like', "%{$result->common_name_th}%")->first();
+                                }
+
+                            @endphp
+                            @if ($plant)
+                                <div class="card mt-3">
+                                    <div class="carousel-inner">
+                                        @foreach ($plant->images as $index => $img)
+                                            <div class="carousel-item @if ($index == 0) active @endif">
+                                                <img src="{{ $img }}" class="d-block w-100 rounded shadow-sm"
+                                                    alt="{{ $plant->scientific_name }}">
+                                            </div>
+                                        @endforeach
+                                    </div>
+                                    {{-- <img src="{{ }}" class="card-img-top"
+                                        alt="{{ $plant->common_name_en }}"> --}}
+                                    <div class="card-body">
+                                        <h5 class="card-title">{{ $plant->common_name_en }}
+                                            ({{ $plant->common_name_th }})</h5>
+                                        <p class="card-text">{{ $plant->description }}</p>
+                                    </div>
+                                </div>
+                            @endif
                         @else
                             <p>ไม่สามารถแยกวิเคราะห์ผลลัพธ์ได้อย่างถูกต้อง</p>
                         @endif
                     </div>
                 @endif
 
-                
+
             </div>
         </div>
     </div>
