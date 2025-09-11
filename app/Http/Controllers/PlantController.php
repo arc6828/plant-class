@@ -35,6 +35,12 @@ class PlantController extends Controller
 
     public function show(Plant $plant)
     {
+        // if $plant->descrition is null, '
+        if (is_null($plant->description)) {
+            // create content from Gemini API
+
+            $plant->description = 'No description available.';
+        }
         return view('db-plants.show', compact('plant'));
     }
 }

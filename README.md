@@ -1,5 +1,11 @@
 # Plant Classification
 
+- update UI
+- generate Blank cell
+
+## make a service class
+php artisan make:class Services/GeminiService
+
 ## Reference
 https://data.addrun.org
 
