@@ -29,7 +29,7 @@
                         if (file) {
                             const img = document.getElementById('uploadedImage');
                             img.src = URL.createObjectURL(file);
-                            img.style.display = 'block';
+                            img.style.display = 'inline';
                             const resultSection = document.getElementById('resultSection');
                             resultSection.style.display = 'none';
                         }
