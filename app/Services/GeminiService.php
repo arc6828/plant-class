@@ -20,15 +20,15 @@ class GeminiService
     /**
      * ส่งข้อความไปยัง Gemini API
      */
-    public function generateText(string $prompt, $model = null)
+    public function generateText(string $prompt)
     {
 
-        $model = $model ?? $this->baseModel;
+        // $model = $model ?? $this->baseModel;
 
         $response = Http::withHeaders([
             'x-goog-api-key' => '' . $this->apiKey,
             'Content-Type' => 'application/json',
-        ])->post("{$this->baseUrl}/{$model}:generateContent", [
+        ])->post("{$this->baseUrl}/{$this->baseModel}:generateContent", [
             'contents' => [
                 [
                     'parts' => [
@@ -52,8 +52,9 @@ class GeminiService
     /**
      * อัปโหลดและวิเคราะห์ภาพด้วย Gemini
      */
-    public function classifyImage(string $imagePath, string $prompt = 'Identify this plant')
+    public function classifyImage(string $imagePath)
     {
+        $prompt = "ระบุชื่อพืชชนิดนี้ พร้อมระบุชื่อวิทยาศาสตร์ + ชื่อสามัญเป็นภาษาไทยและภาษาอังกฤษ + description เป็นภาษาไทยอย่างเดียว ตอบเป็น JSON โดยมีโครงสร้าง {\"scientific_name\": \"\", \"common_name_th\": \"\", \"common_name_en\": \"\",\"description\": \"\"}";
         $imageData = base64_encode(file_get_contents($imagePath));
 
         $response = Http::withHeaders([
