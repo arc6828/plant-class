@@ -27,6 +27,6 @@ class PlantIdentificationController extends Controller
 
         $result = $geminiService->classifyImage($imagePath);       
 
-        return back()->with('result', $result);
+        return back()->with('result', $result)->with('imagePath', $path);
     }
 }

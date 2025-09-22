@@ -18,9 +18,29 @@
                         </form>
                     </div>
                 </div>
+                {{-- Display image after input file change --}}
+                <div class="text-center mt-4">
+                    <img id="uploadedImage" src="#" alt="Uploaded Plant Image"
+                        class="img-fluid rounded shadow-sm" style="max-height: 300px; display: none;">
+                </div>
+                <script>
+                    document.getElementById('plantImage').addEventListener('change', function(event) {
+                        const [file] = event.target.files;
+                        if (file) {
+                            const img = document.getElementById('uploadedImage');
+                            img.src = URL.createObjectURL(file);
+                            img.style.display = 'block';
+                        }
+                    });
+                </script>
 
                 <!-- ส่วนแสดงผลลัพธ์ -->
                 @if (session('result'))
+                    {{-- display image from storage --}}
+                    <div class="text-center mt-4">
+                        <img src="{{ asset('storage/' . session('imagePath')) }}" alt="Uploaded Plant Image"
+                            class="img-fluid rounded shadow-sm" style="max-height: 300px;">
+                    </div>
                     <div class="alert alert-info mt-4">
                         <h5>ผลการจำแนก:</h5>
                         <p class="d-none">{{ session('result') }}</p>
