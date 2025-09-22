@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
 
 // use Intervention\Image\Laravel\Facades\Image;
@@ -23,25 +24,24 @@ class ImageService
     /**
      * จัดการอัปโหลดและประมวลผลภาพ
      *
-     * @param UploadedFile $file
+     * @param string $path
      * @param int $width
      * @param int $height
      * @param int $quality
      * @return string $path
      */
     public function processAndSave(
-        UploadedFile $file,
+        string $path,
         int $width = 512,
         int $height = 512,
-        int $quality = 80
     ): String {
-        $image = ImageManager::imagick()->read($file->getPathname());
+        $manager = new ImageManager(new Driver());
+        $imagePath = storage_path('app/public/' . $path);
+        $image = $manager->read($imagePath);
         $image = $image->resizeCanvas($width,  $height, '000000');
         //save to storage
-        $filename = Str::uuid() . '.jpg';
-        // save progressive jpeg file in low quality
-        $image->save(storage_path('app/public/temp/' . $filename), quality: 80, progressive: true);
-        return 'temp/' . $filename;
+        $image->save($imagePath);
+        return $path;
     }
 }
 

@@ -20,9 +20,9 @@ class PlantIdentificationController extends Controller
         $request->validate([
             'plantImage' => 'required|image|max:16384',
         ]);
-        // $file = $request->file('plantImage');
+        $path = $request->file('plantImage')->store('temp', 'public');
         // Resize and save the image using ImageService
-        $path = $imageService->processAndSave($request->file('plantImage'));
+        $path = $imageService->processAndSave($path);
         // เก็บไฟล์ภาพชั่วคราว
         // $path = $file->store('temp', 'public');
         // $imagePath = asset('storage/' . $path);
