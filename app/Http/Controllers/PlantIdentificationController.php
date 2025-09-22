@@ -20,15 +20,14 @@ class PlantIdentificationController extends Controller
         $request->validate([
             'plantImage' => 'required|image|max:16384',
         ]);
-        $file = $request->file('plantImage');
+        // $file = $request->file('plantImage');
         // Resize and save the image using ImageService
-        $file = $imageService->processAndSave($file);
+        $path = $imageService->processAndSave($request->file('plantImage'));
         // เก็บไฟล์ภาพชั่วคราว
-        $path = $file->store('temp', 'public');
+        // $path = $file->store('temp', 'public');
         // $imagePath = asset('storage/' . $path);
-        $imagePath = storage_path('app/public/' . $path);
 
-        $result = $geminiService->classifyImage($imagePath);       
+        $result = $geminiService->classifyImage($path);       
 
         return back()->with('result', $result)->with('imagePath', $path);
     }
