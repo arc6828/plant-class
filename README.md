@@ -3,8 +3,15 @@
 - update UI
 - generate Blank cell
 
+## Dependencies
+```
+composer require intervention/image-laravel
+
+```
+
 ## make a service class
 php artisan make:class Services/GeminiService
+php artisan make:class Services/ImageService
 
 ## Reference
 https://data.addrun.org
