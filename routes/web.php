@@ -49,8 +49,8 @@ Route::post('/plant-identification', function (Request $request) {
 
     // เก็บไฟล์ภาพชั่วคราว
     $path = $request->file('plantImage')->store('temp', 'public');
-    $imagePath = storage_path('app/public/' . $path);
-    $imageBase64 = base64_encode(file_get_contents($imagePath));
+    $imagePath = asset('storage/' . $path);
+    //$imageBase64 = base64_encode(file_get_contents($imagePath));
 
     // Gemini API
     $response = Http::withHeaders([
