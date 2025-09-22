@@ -4,8 +4,9 @@ namespace App\Services;
 
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-// use Intervention\Image\Facades\Image;
 use Illuminate\Support\Str;
+use Intervention\Image\Laravel\Facades\Image;
+
 
 class ImageService
 {
@@ -17,21 +18,21 @@ class ImageService
         //
     }
 
-     /**
+    /**
      * จัดการอัปโหลดและประมวลผลภาพ
      *
      * @param UploadedFile $file
      * @param int $width
      * @param int $height
      * @param int $quality
-     * @return array
+     * @return UploadedFile $newfile
      */
     public function processAndSave(
         UploadedFile $file,
         int $width = 512,
         int $height = 512,
         int $quality = 80
-    ): array {
+    ): UploadedFile {
         // เปิดไฟล์ด้วย Intervention Image
         $image = Image::make($file)
             ->resize($width, $height, function ($constraint) {
@@ -40,20 +41,29 @@ class ImageService
             })
             ->encode('jpg', $quality);
 
-        // กำหนดชื่อไฟล์ใหม่
-        $filename = Str::uuid() . '.jpg';
+        return new UploadedFile(
+            $image->stream()->getMetadata('uri'), // ใช้ stream URI แทน path
+            $file->getClientOriginalName(),
+            'image/jpeg',
+            null,
+            true // ตั้งค่าเป็น true เพื่อระบุว่าไฟล์นี้ถูกอัปโหลดแล้ว
+        );
 
-        // กำหนด path ใน storage
-        $path = 'plants/' . $filename;
 
-        // บันทึกไฟล์ลง public disk
-        Storage::disk('public')->put($path, (string) $image);
+        // // กำหนดชื่อไฟล์ใหม่
+        // $filename = Str::uuid() . '.jpg';
 
-        // คืนค่าผลลัพธ์
-        return [
-            'path'   => $path,
-            'url'    => asset('storage/' . $path),
-            'base64' => base64_encode((string) $image),
-        ];
+        // // กำหนด path ใน storage
+        // $path = 'temp/' . $filename;
+
+        // // บันทึกไฟล์ลง public disk
+        // Storage::disk('public')->put($path, (string) $image);
+
+        // // คืนค่าผลลัพธ์
+        // return [
+        //     'path'   => $path,
+        //     'url'    => asset('storage/' . $path),
+        //     'base64' => base64_encode((string) $image),
+        // ];
     }
 }
