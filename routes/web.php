@@ -44,7 +44,7 @@ Route::view('/identify', 'plant-identification');
 
 Route::post('/plant-identification', function (Request $request) {
     $request->validate([
-        'plantImage' => 'required|image|max:4096',
+        'plantImage' => 'required|image|max:16384',
     ]);
 
     // เก็บไฟล์ภาพชั่วคราว
