@@ -60,10 +60,7 @@ Route::post('/plant-identification', function (Request $request) {
         "contents" => [[
             "parts" => [
                 ["text" => "ระบุชื่อพืชชนิดนี้ พร้อมระบุชื่อวิทยาศาสตร์ + ชื่อสามัญเป็นภาษาไทยและภาษาอังกฤษ + description เป็นภาษาไทยอย่างเดียว ตอบเป็น JSON โดยมีโครงสร้าง {\"scientific_name\": \"\", \"common_name_th\": \"\", \"common_name_en\": \"\",\"description\": \"\"}"],
-                ["inline_data" => [
-                    "mime_type" => "image/jpeg",
-                    "data" => $imageBase64
-                ]]
+                ["image_url" => $imagePath ]
             ]
         ]]
     ]);
