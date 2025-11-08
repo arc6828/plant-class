@@ -19,12 +19,14 @@ class PlantIdentificationController extends Controller
     public function identifyPlant(Request $request, GeminiService $geminiService, ImageService $imageService)
     {
         $request->validate([
-            'plantImage' => 'required|image|max:16384',
+            // 'plantImage' => 'required|image|max:16384',
+            'plantImageURL' => 'required|url',
         ]);
-        $path = $request->file('plantImage')->store('temp', 'public');
+        // $path = $request->file('plantImage')->store('temp', 'public');
+        $path = $request->input('plantImageURL');
         // Resize and save the image using ImageService
         try {
-            $path = $imageService->processAndSave($path);
+            // $path = $imageService->processAndSave($path);
         } catch (Exception $e) {
             // return back()->with('error', 'เกิดข้อผิดพลาดในการประมวลผลภาพ: ' . $e->getMessage());
         }

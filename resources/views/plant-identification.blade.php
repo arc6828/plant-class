@@ -13,6 +13,7 @@
                                 <label for="plantImage" class="form-label">เลือกไฟล์ภาพ</label>
                                 <input type="file" name="plantImage" id="plantImage" class="form-control"
                                     accept="image/*" required>
+                                <input type="hidden" name="plantImageURL" value="" required>
                             </div>
                             <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณพืช</button>
                         </form>
@@ -31,7 +32,32 @@
                             img.src = URL.createObjectURL(file);
                             img.style.display = 'inline';
                             const resultSection = document.getElementById('resultSection');
-                            resultSection.style.display = 'none';
+                            if (resultSection) {
+                                resultSection.style.display = 'none';
+                            }
+
+                            // send Request to upload image to server and get URL
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            fetch('https://ml.ckartisan.com/photo/upload', {
+                                    method: 'POST',
+                                    body: formData,
+                                    headers: {
+                                        // 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                    }
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+                                    if (data) {
+                                        document.querySelector('input[name="plantImageURL"]').value = data.jpeg_url;
+                                    } else {
+                                        console.error('Error uploading image:', data.error);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error uploading image:', error);
+                                });
                         }
                     });
                 </script>
@@ -42,7 +68,9 @@
                     <div id="resultSection" class="mt-4">
                         {{-- display image from storage --}}
                         <div class="text-center mt-4">
-                            <img src="{{ asset('storage/' . session('imagePath')) }}" alt="Uploaded Plant Image"
+                            {{-- <img src="{{ asset('storage/' . session('imagePath')) }}" alt="Uploaded Plant Image"
+                                class="img-fluid rounded shadow-sm" style="max-height: 300px;"> --}}
+                            <img src="{{ session('imagePath') }}" alt="Uploaded Plant Image"
                                 class="img-fluid rounded shadow-sm" style="max-height: 300px;">
                         </div>
                         <div class="alert alert-info mt-4">
