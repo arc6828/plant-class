@@ -4,7 +4,7 @@
             <div class="col-lg-6">
                 <div class="card shadow-lg border-0">
                     <div class="card-header bg-success text-white">
-                        <h4 class="mb-0">🌿 อัปโหลดภาพเพื่อจำแนกพรรณพืช</h4>
+                        <h4 class="mb-0">🌿 อัปโหลดภาพเพื่อจำแนกพรรณไม้</h4>
                     </div>
                     <div class="card-body">
                         <form method="POST" action="{{ route('plant.identify') }}" enctype="multipart/form-data">
@@ -15,7 +15,7 @@
                                     accept="image/*" required>
                                 <input type="hidden" name="plantImageURL" value="" required>
                             </div>
-                            <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณพืช</button>
+                            <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณไม้</button>
                         </form>
                     </div>
                 </div>
