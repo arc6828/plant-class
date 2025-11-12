@@ -50,6 +50,7 @@ class PlantController extends Controller
             // decode json string to object
             $result = json_decode($str, false);
             $plant->description = $result->description ?? 'No description available.';
+            $plant->common_name_th = $result->common_name_th ?? 'No common name available.';
         }
         return view('db-plants.show', compact('plant'));
     }
