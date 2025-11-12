@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Plant;
+use App\Services\GeminiService;
 use Illuminate\Http\Request;
 
 class PlantController extends Controller
@@ -33,13 +34,15 @@ class PlantController extends Controller
         return view('db-plants.index', compact('plants', 'families'));
     }
 
-    public function show(Plant $plant)
+    public function show(Plant $plant, GeminiService $geminiService)
     {
         // if $plant->descrition is null, '
         if (is_null($plant->description)) {
-            // create content from Gemini API
-
-            $plant->description = 'No description available.';
+            
+            // $plant->description = 'No description available.';
+            
+            // create content from Gemini API by GeminiService
+            $plant->description = $geminiService->generateDescription($plant);
         }
         return view('db-plants.show', compact('plant'));
     }

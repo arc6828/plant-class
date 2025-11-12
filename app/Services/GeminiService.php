@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Plant;
 use Illuminate\Support\Facades\Http;
 
 class GeminiService
@@ -22,6 +23,39 @@ class GeminiService
      */
     public function generateText(string $prompt)
     {
+
+        // $model = $model ?? $this->baseModel;
+
+        $response = Http::withHeaders([
+            'x-goog-api-key' => '' . $this->apiKey,
+            'Content-Type' => 'application/json',
+        ])->post("{$this->baseUrl}/{$this->baseModel}:generateContent", [
+            'contents' => [
+                [
+                    'parts' => [
+                        ['text' => $prompt]
+                    ]
+                ]
+            ],
+        ]);
+
+        $result = "ไม่มีข้อมูลตอบกลับ";
+        if ($response->successful()) {
+            $data = $response->json();
+            $result = $data['candidates'][0]['content']['parts'][0]['text'] ?? "ไม่พบข้อมูล";
+        } else {
+            $result = "Error: " . $response->status() . " - " . $response->body();
+        }
+
+        return $result;
+    }
+
+    /**
+     * ส่งข้อความ Description ไปยัง Gemini API เพื่อสร้างคำอธิบาย
+     */
+    public function generateDescription(Plant $plant)
+    {
+        $prompt = "สร้างคำอธิบายเกี่ยวกับพืชดังต่อไปนี้ใน 1 ย่อหน้า: " . $plant->scientific_name;
 
         // $model = $model ?? $this->baseModel;
 
