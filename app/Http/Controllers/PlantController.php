@@ -42,7 +42,14 @@ class PlantController extends Controller
             // $plant->description = 'No description available.';
             
             // create content from Gemini API by GeminiService
-            $plant->description = $geminiService->generateDescription($plant);
+            $description = $geminiService->generateDescription($plant);
+
+            // clean up the string if it contains unwanted characters like ```json
+            $str = preg_replace('/^```json|```$/', '', trim($description));
+
+            // decode json string to object
+            $result = json_decode($str, false);
+            $plant->description = $result->description ?? 'No description available.';
         }
         return view('db-plants.show', compact('plant'));
     }
