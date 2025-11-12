@@ -56,7 +56,7 @@ class GeminiService
     public function generateDescription(Plant $plant)
     {
         // $prompt = "สร้างคำอธิบายเกี่ยวกับพืชดังต่อไปนี้ใน 1 ย่อหน้า: " . $plant->scientific_name;
-        $prompt = "ระบุชื่อพืชชนิดนี้ พร้อมระบุชื่อวิทยาศาสตร์ + ชื่อสามัญเป็นภาษาไทยและภาษาอังกฤษ + description เป็นภาษาไทยอย่างเดียว ตอบเป็น JSON โดยมีโครงสร้าง {\"scientific_name\": \"\", \"common_name_th\": \"\", \"common_name_en\": \"\",\"description\": \"\"}";
+        $prompt = "ระบุชื่อพืชชนิดนี้ พร้อมระบุชื่อวิทยาศาสตร์ + ชื่อสามัญเป็นภาษาไทยและภาษาอังกฤษ + description เป็นภาษาไทยอย่างเดียวโดยครอบลุมข้อมูลนี้ (ลักษณะเด่น, การกระจายพันธุ์ หรือ ถิ่นกำเนิด, ประโยชน์ หรือ ความสำคัญ) ตอบเป็น JSON โดยมีโครงสร้าง {\"scientific_name\": \"\", \"common_name_th\": \"\", \"common_name_en\": \"\",\"description\": \"\"}";
 
         // $model = $model ?? $this->baseModel;
 
