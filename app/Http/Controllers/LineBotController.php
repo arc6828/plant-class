@@ -124,6 +124,11 @@ class LineBotController extends Controller
         }
         $plantInfo .= "---";
         // return $plantInfo ?: 'ไม่สามารถจำแนกพืชได้';
+        
+        // แปลเป็นภาษาไทย ด้วย GeminiService
+        $prompt = "แปลข้อความต่อไปนี้เป็นภาษาไทยอย่างเป็นทางการ:\n".$plantInfo;
+        $geminiService = new \App\Services\GeminiService();
+        $plantInfo = $geminiService->generateText($prompt);
         return $plantInfo;
     }
 }
