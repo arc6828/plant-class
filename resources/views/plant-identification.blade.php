@@ -13,7 +13,7 @@
                                 <label for="plantImage" class="form-label">เลือกไฟล์ภาพ</label>
                                 <input type="file" name="plantImage" id="plantImage" class="form-control"
                                     accept="image/*" required>
-                                <input type="hidden" name="plantImageURL" value="" required>
+                                <input type="text" name="plantImageURL" value="" required>
                             </div>
                             <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณไม้</button>
                         </form>
