@@ -6,15 +6,60 @@
                     <div class="card-header bg-success text-white">
                         <h4 class="mb-0">🌿 อัปโหลดภาพเพื่อจำแนกพรรณไม้</h4>
                     </div>
+                    <script>
+                        // image onchange event handler
+                        function onChangedImage(event) {
+                            const [file] = event.target.files ?? [];
+                            if (file) {
+                                const img = document.getElementById('uploadedImage');
+                                img.src = URL.createObjectURL(file);
+                                img.style.display = 'inline';
+
+                                // render resultSection to none
+                                const resultSection = document.getElementById('resultSection');
+                                if (resultSection) {
+                                    resultSection.style.display = 'none';
+                                }
+
+                                // send Request to upload image to server and get URL
+                                const formData = new FormData();
+                                formData.append('file', file);
+                                const log = document.getElementById('log');
+                                fetch('https://ml.ckartisan.com/photo/upload', {
+                                        method: 'POST',
+                                        body: formData,
+                                        headers: {
+                                            // 'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                                        }
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        log.innerText = 'อัปโหลดภาพสำเร็จ: ' + JSON.stringify(data);
+                                        if (data) {
+                                            document.querySelector('input[name="plantImageURL"]').value = data.jpeg_url;
+                                        } else {
+                                            console.error('Error uploading image:', data.error);
+                                            log.innerText = 'อัปโหลดภาพสำเร็จ แต่ Return อะไรมาไม่รู้: ' + JSON.stringify(data);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        console.error('Error uploading image:', error);
+                                        log.innerText = 'อัปโหลดภาพไม่สำเร็จ ' + JSON.stringify(error);
+                                    });
+                            }
+                        }
+                    </script>
                     <div class="card-body">
                         <form method="POST" action="{{ route('plant.identify') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="plantImage" class="form-label">เลือกไฟล์ภาพ</label>
                                 <input type="file" name="plantImage" id="plantImage" class="form-control"
-                                    accept="image/*" required>
+                                    accept="image/*" onchange="onChangedImage(event)" required >
                                 <input type="text" name="plantImageURL" value="" required>
                             </div>
+                            <div id="log"></div>
                             <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณไม้</button>
                         </form>
                     </div>
@@ -23,44 +68,7 @@
                 <div class="text-center mt-4">
                     <img id="uploadedImage" src="#" alt="Uploaded Plant Image"
                         class="img-fluid rounded shadow-sm" style="max-height: 300px; display: none;">
-                </div>
-                <script>
-                    document.getElementById('plantImage').addEventListener('change', function(event) {
-                        const [file] = event.target.files;
-                        if (file) {
-                            const img = document.getElementById('uploadedImage');
-                            img.src = URL.createObjectURL(file);
-                            img.style.display = 'inline';
-                            const resultSection = document.getElementById('resultSection');
-                            if (resultSection) {
-                                resultSection.style.display = 'none';
-                            }
-
-                            // send Request to upload image to server and get URL
-                            const formData = new FormData();
-                            formData.append('file', file);
-                            fetch('https://ml.ckartisan.com/photo/upload', {
-                                    method: 'POST',
-                                    body: formData,
-                                    headers: {
-                                        // 'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                                    }
-                                })
-                                .then(response => response.json())
-                                .then(data => {
-                                    console.log(data);
-                                    if (data) {
-                                        document.querySelector('input[name="plantImageURL"]').value = data.jpeg_url;
-                                    } else {
-                                        console.error('Error uploading image:', data.error);
-                                    }
-                                })
-                                .catch(error => {
-                                    console.error('Error uploading image:', error);
-                                });
-                        }
-                    });
-                </script>
+                </div>                
 
                 <!-- ส่วนแสดงผลลัพธ์ -->
 
