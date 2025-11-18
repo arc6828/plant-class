@@ -57,9 +57,9 @@
                                 <label for="plantImage" class="form-label">เลือกไฟล์ภาพ</label>
                                 <input type="file" name="plantImage" id="plantImage" class="form-control"
                                     accept="image/*" onchange="onChangedImage(event)" required >
-                                <input type="text" name="plantImageURL" value="" required>
+                                <input type="hidden" name="plantImageURL" value="" required>
                             </div>
-                            <div id="log"></div>
+                            <div class="d-none" id="log"></div>
                             <button type="submit" class="btn btn-success w-100">🔍 วิเคราะห์พรรณไม้</button>
                         </form>
                     </div>
